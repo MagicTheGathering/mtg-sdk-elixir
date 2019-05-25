@@ -5,7 +5,7 @@ defmodule Mtg.Card.Ruling do
 
   defstruct [:date, :text]
 
-  @type t :: %__MODULE__{date: String.t(), text: String.t()}
+  @type t :: %__MODULE__{date: binary(), text: binary()}
 end
 
 defimpl Collectable, for: Mtg.Card.Ruling do

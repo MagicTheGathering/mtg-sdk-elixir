@@ -5,7 +5,7 @@ defmodule Mtg.Card.Legality do
 
   defstruct [:format, :legality]
 
-  @type t :: %__MODULE__{format: String.t(), legality: String.t()}
+  @type t :: %__MODULE__{format: binary(), legality: binary()}
 end
 
 defimpl Collectable, for: Mtg.Card.Legality do

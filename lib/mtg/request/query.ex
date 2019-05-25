@@ -8,7 +8,7 @@ defmodule Mtg.Request.Query do
   @type or_filter :: {filter_key, :or, [binary()]}
   @type and_filter :: {filter_key, :and, [binary()]}
 
-  @spec build_path(binary(), [normal_filter | or_filter | and_filter]) :: binary()
+  @spec build_path(binary(), list(normal_filter() | or_filter() | and_filter())) :: binary()
   def build_path(path, params),
     do: "#{path}#{params |> process_list([])}"
 

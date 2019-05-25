@@ -5,5 +5,5 @@ defmodule Mtg.Error do
 
   defstruct [:code, :message]
 
-  @type t :: %__MODULE__{code: integer, message: String.t()}
+  @type t :: %__MODULE__{code: integer(), message: binary()}
 end

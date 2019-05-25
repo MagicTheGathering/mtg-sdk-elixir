@@ -8,10 +8,10 @@ defmodule Mtg.Api.Base do
 
   @type filter_key :: atom() | binary()
   @type normal_filter :: {filter_key, any()}
-  @type or_filter :: {filter_key, :or, [binary()]}
-  @type and_filter :: {filter_key, :and, [binary()]}
+  @type or_filter :: {filter_key, :or, list(binary())}
+  @type and_filter :: {filter_key, :and, list(binary())}
 
-  @callback call([normal_filter | or_filter | and_filter]) ::
+  @callback call(list(normal_filter() | or_filter() | and_filter())) ::
               {:ok, Collection.t()} | {:error, Error.t()}
 
   defmacro __using__(_) do
@@ -24,7 +24,7 @@ defmodule Mtg.Api.Base do
 
       @type headers :: [{binary(), binary()}]
 
-      @spec get(binary()) :: {headers, [map()]} | Error.t()
+      @spec get(binary()) :: {headers, list(map())} | Error.t()
       def get(url_path)do
         "#{@mtg_url}#{url_path}"
         |> HTTPoison.get([], [recv_timeout: 30000])

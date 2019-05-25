@@ -6,12 +6,12 @@ defmodule Mtg.Card.ForeignName do
   defstruct [:flavor, :image_url, :language, :multiverseid, :name, :text]
 
   @type t :: %__MODULE__{
-          flavor: String.t(),
-          image_url: String.t(),
-          language: String.t(),
-          multiverseid: integer,
-          name: String.t(),
-          text: String.t()
+          flavor: binary(),
+          image_url: binary(),
+          language: binary(),
+          multiverseid: integer(),
+          name: binary(),
+          text: binary()
         }
 end
 

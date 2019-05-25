@@ -67,7 +67,7 @@ iex> Mtg.list(Mtg.Card)
    ],
    page_size: 100,
    total_count: 45846,
-   type: "Card"
+   type: "cards"
  }}
 ```
 
@@ -83,7 +83,7 @@ iex> Mtg.list(Mtg.Card)
    ],
    page_size: 100,
    total_count: 6,
-   type: "Card"
+   type: "cards"
  }}
 ```
 
@@ -99,7 +99,7 @@ iex> Mtg.list(Mtg.Card, [{:name, :or, ["Abundance", "Tarmogoyf"]}])
    ],
    page_size: 100,
    total_count: 12,
-   type: "Card"
+   type: "cards"
  }}
 ```
 
@@ -115,8 +115,76 @@ iex> Mtg.list(Mtg.Card, [{:name, :and, ["Abu", "dance"]}])
    ],
    page_size: 100,
    total_count: 6,
-   type: "Card"
+   type: "cards"
  }}
 ```
 
 For more query filters, visit [https://docs.magicthegathering.io/#api_v1cards_list](https://docs.magicthegathering.io/#api_v1cards_list).
+
+### Sets
+
+#### Get all sets with default values (pageSize = 500, page = 0)
+```elixir
+iex> Mtg.list(Mtg.Set)
+{:ok,
+ %Mtg.Response.Collection{
+   count: 448,
+   data: [
+     %Mtg.Set{
+       block: "Core Set",
+       booster: ["rare", "uncommon", "uncommon", "uncommon", "common", "common",
+        "common", "common", "common", "common", "common", "common", "common",
+        "common", "land", "marketing"],
+       border: nil,
+       code: "10E",
+       gatherer_code: nil,
+       magic_cards_info_code: nil,
+       mkm_id: nil,
+       mkm_name: nil,
+       name: "Tenth Edition",
+       old_code: nil,
+       online_only: false,
+       release_date: ~D[2007-07-13],
+       type: "core"
+     },
+     ...
+   ],
+   page_size: 500,
+   total_count: 448,
+   type: "sets"
+ }}
+```
+
+#### Get all sets with filters (block = "com")
+```elixir
+iex> Mtg.list(Mtg.Set)
+{:ok,
+ %Mtg.Response.Collection{
+   count: 19,
+   data: [
+     %Mtg.Set{...},
+     ...
+   ],
+   page_size: 500,
+   total_count: 19,
+   type: "sets"
+ }}
+```
+
+#### Get all cards with OR filters (block = "com" OR block = "black")
+```elixir
+iex> Mtg.list(Mtg.Set, [{:block, :or, ["com", "black"]}])
+{:ok,
+ %Mtg.Response.Collection{
+   count: 40,
+   data: [
+     %Mtg.Set{...},
+     ...
+   ],
+   page_size: 500,
+   total_count: 40,
+   type: "sets"
+ }}
+```
+
+For more query filters, visit [https://docs.magicthegathering.io/#api_v1sets_list](https://docs.magicthegathering.io/#api_v1sets_list).
