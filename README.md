@@ -25,7 +25,7 @@ Now you are ready to start calling MTG API.
 
 #### Get all cards with default values (pageSize = 100, page = 0)
 ```elixir
-iex> Mtg.list(Mtg.Card)
+iex> Mtg.list(Card)
 {:ok,
  %Mtg.Response.Collection{
    count: 100,
@@ -73,7 +73,7 @@ iex> Mtg.list(Mtg.Card)
 
 #### Get all cards with filters (name = "Abundance")
 ```elixir
-iex> Mtg.list(Mtg.Card)
+iex> Mtg.list(Card)
 {:ok,
  %Mtg.Response.Collection{
    count: 6,
@@ -89,7 +89,7 @@ iex> Mtg.list(Mtg.Card)
 
 #### Get all cards with OR filters (name = "Abundance" OR name = "Tarmogoyf")
 ```elixir
-iex> Mtg.list(Mtg.Card, [{:name, :or, ["Abundance", "Tarmogoyf"]}])
+iex> Mtg.list(Card, [{:name, :or, ["Abundance", "Tarmogoyf"]}])
 {:ok,
  %Mtg.Response.Collection{
    count: 12,
@@ -105,7 +105,7 @@ iex> Mtg.list(Mtg.Card, [{:name, :or, ["Abundance", "Tarmogoyf"]}])
 
 #### Get all cards with AND filters (name = "Abu" AND name = "dance")
 ```elixir
-iex> Mtg.list(Mtg.Card, [{:name, :and, ["Abu", "dance"]}])
+iex> Mtg.list(Card, [{:name, :and, ["Abu", "dance"]}])
 {:ok,
  %Mtg.Response.Collection{
    count: 6,
@@ -119,13 +119,22 @@ iex> Mtg.list(Mtg.Card, [{:name, :and, ["Abu", "dance"]}])
  }}
 ```
 
+#### Get card
+```elixir
+iex> Mtg.show(Card, 1)
+{:ok,
+ %Mtg.Card{
+  ...
+ }}
+```
+
 For more query filters, visit [https://docs.magicthegathering.io/#api_v1cards_list](https://docs.magicthegathering.io/#api_v1cards_list).
 
 ### Sets
 
 #### Get all sets with default values (pageSize = 500, page = 0)
 ```elixir
-iex> Mtg.list(Mtg.Set)
+iex> Mtg.list(Set)
 {:ok,
  %Mtg.Response.Collection{
    count: 448,
@@ -157,7 +166,7 @@ iex> Mtg.list(Mtg.Set)
 
 #### Get all sets with filters (block = "com")
 ```elixir
-iex> Mtg.list(Mtg.Set)
+iex> Mtg.list(Set)
 {:ok,
  %Mtg.Response.Collection{
    count: 19,
@@ -173,7 +182,7 @@ iex> Mtg.list(Mtg.Set)
 
 #### Get all cards with OR filters (block = "com" OR block = "black")
 ```elixir
-iex> Mtg.list(Mtg.Set, [{:block, :or, ["com", "black"]}])
+iex> Mtg.list(Set, [{:block, :or, ["com", "black"]}])
 {:ok,
  %Mtg.Response.Collection{
    count: 40,
