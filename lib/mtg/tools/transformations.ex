@@ -1,10 +1,14 @@
 defmodule Mtg.Tools.Transformations do
+  @moduledoc """
+  Module defining the functions to add all query params to an API url
+  """
+
   alias Mtg.{Card}
   alias Mtg.Card.{ForeignName, Legality, Ruling}
 
-  @spec structurize_map([{atom(), String.t()}], String.t()) :: nil | integer()
-  def add_number_header_value(headers, name),
-    do: headers |> List.keyfind(name, 0) |> cast_to_number()
+  @spec add_number_header_value([{binary(), binary()}], binary()) :: nil | integer()
+  def add_number_header_value(header, name),
+    do: header |> List.keyfind(name, 0) |> cast_to_number()
 
   defp cast_to_number(nil), do: nil
   defp cast_to_number({_, item}) when is_number(item), do: item

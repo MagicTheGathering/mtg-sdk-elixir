@@ -1,6 +1,6 @@
 defmodule Mtg.Response.Collection do
   @moduledoc """
-  Response that encapsulates a collections of  objects
+  Response that encapsulates object collections
   """
 
   alias Mtg.{Card}

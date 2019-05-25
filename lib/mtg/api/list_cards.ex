@@ -1,4 +1,8 @@
 defmodule Mtg.Api.ListCards do
+  @moduledoc """
+  Module defining the listing cards API call
+  """
+
   use Mtg.Api.Base
 
   alias Mtg.{Card, Error}
