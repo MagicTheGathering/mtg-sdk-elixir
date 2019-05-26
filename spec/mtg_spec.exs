@@ -209,5 +209,54 @@ defmodule MtgSpec do
         expect id |> to(eq "02ea5ddc89d7847abc77a0fbcbf2bc74e6456559")
       end
     end
+
+    context "when getting one set" do
+      let :mtg_response do
+        """
+        {
+          "set": {
+            "block": "Core Set",
+            "booster": [
+              "rare", "uncommon", "uncommon", "uncommon", "common", "common",
+              "common", "common", "common", "common", "common", "common",
+              "common", "common", "land", "marketing"
+            ],
+            "border": null,
+            "code": "10E",
+            "gathererCode": null,
+            "magicCardsInfoCode": null,
+            "mkm_id": 1234,
+            "mkm_name": null,
+            "name": "Tenth Edition",
+            "oldCode": null,
+            "onlineOnly": false,
+            "releaseDate": "2007-07-13",
+            "type": "core"
+          }
+        }
+        """
+      end
+
+      let :response_set do
+        {:ok, set} = Mtg.show(Set, "10E")
+        set
+      end
+
+      before do
+        allow HTTPoison |> to(accept(:get, fn("https://api.magicthegathering.io/v1/sets/10E", [], [recv_timeout: 30000]) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: mtg_response()}}
+        end))
+      end
+
+      it do
+        %Mtg.Set{block: block, booster: booster, border: border, mkm_id: mkm_id, release_date: release_date} = response_set()
+
+        expect block |> to(eq "Core Set")
+        expect booster |> to(have_length 16)
+        expect border |> to(eq nil)
+        expect mkm_id |> to(eq 1234)
+        expect release_date |> to(eq ~D[2007-07-13])
+      end
+    end
   end
 end

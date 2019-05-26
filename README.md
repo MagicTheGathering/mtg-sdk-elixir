@@ -119,6 +119,8 @@ iex> Mtg.list(Card, [{:name, :and, ["Abu", "dance"]}])
  }}
 ```
 
+For more query filters, visit [https://docs.magicthegathering.io/#api_v1cards_list](https://docs.magicthegathering.io/#api_v1cards_list).
+
 #### Get card
 ```elixir
 iex> Mtg.show(Card, 1)
@@ -127,8 +129,6 @@ iex> Mtg.show(Card, 1)
   ...
  }}
 ```
-
-For more query filters, visit [https://docs.magicthegathering.io/#api_v1cards_list](https://docs.magicthegathering.io/#api_v1cards_list).
 
 ### Sets
 
@@ -197,3 +197,12 @@ iex> Mtg.list(Set, [{:block, :or, ["com", "black"]}])
 ```
 
 For more query filters, visit [https://docs.magicthegathering.io/#api_v1sets_list](https://docs.magicthegathering.io/#api_v1sets_list).
+
+#### Get set
+```elixir
+iex> Mtg.show(Set, "ktk")
+{:ok,
+ %Mtg.Set{
+  ...
+ }}
+```
