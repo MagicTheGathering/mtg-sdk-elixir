@@ -3,7 +3,7 @@ defmodule Mtg.Api.Base do
   Module defining a base module to call the API and parse the response
   """
 
-  alias Mtg.{Card, Error}
+  alias Mtg.{Card, Set, Error}
   alias Mtg.Response.{Collection}
 
   @type filter_key :: atom() | binary()
@@ -12,7 +12,7 @@ defmodule Mtg.Api.Base do
   @type and_filter :: {filter_key, :and, list(binary())}
 
   @callback call(list(normal_filter() | or_filter() | and_filter()) | number()) ::
-              {:ok, Collection.t() | Card.t()} | {:error, Error.t()}
+              {:ok, Collection.t() | Card.t() | Set.t()} | {:error, Error.t()}
 
   defmacro __using__(_) do
     quote do
