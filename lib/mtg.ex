@@ -4,7 +4,7 @@ defmodule Mtg do
   """
 
   alias __MODULE__.{Error}
-  alias __MODULE__.Api.{ListCards, ListSets, ShowCard, ShowSet}
+  alias __MODULE__.Api.{GenerateSetBooster, ListCards, ListSets, ShowCard, ShowSet}
   alias __MODULE__.Response.{Collection}
 
   @type filters :: list({atom() | binary(), any()})
@@ -17,4 +17,7 @@ defmodule Mtg do
   @spec show(module(), binary()) :: {:ok, Mtg.Card.t() | Mtg.Set.t()} | {:error, Error.t()}
   def show(Card, id) when is_number(id), do: id |> ShowCard.call()
   def show(Set, code) when is_binary(code), do: code |> ShowSet.call()
+
+  @spec generate_set_booster(binary()) :: {:ok, Collection.t()} | {:error, Error.t()}
+  def generate_set_booster(code), do: code |> GenerateSetBooster.call()
 end

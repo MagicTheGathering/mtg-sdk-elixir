@@ -1,17 +1,13 @@
 defmodule Mtg.MixProject do
   use Mix.Project
 
-  @description """
-    SDK for using https://magicthegathering.io/ in Elixir
-  """
-
-  def project do
+  def project() do
     [
       app: :mtg,
       version: "0.1.0",
       elixir: "~> 1.8",
       name: "MTG SDK Elixir",
-      description: @description,
+      description: description(),
       package: package(),
       deps: deps(),
       source_url: "https://github.com/MagicTheGathering/mtg-sdk-elixir",
@@ -41,17 +37,17 @@ defmodule Mtg.MixProject do
   end
 
   # Run "mix help compile.app" to learn about applications.
-  def application do
+  def application() do
     [
       extra_applications: [:logger]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
-  defp deps do
+  defp deps() do
     [
       {:benchee, "~> 1.0", only: :dev},
-      {:dialyxir, "~> 0.5", only: [:dev]},
+      {:dialyxir, "~> 0.5", only: :dev},
       {:espec, "~> 1.7.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
       {:httpoison, "~> 1.4"},
@@ -60,8 +56,13 @@ defmodule Mtg.MixProject do
     ]
   end
 
-  defp package do
+  defp description() do
+    "SDK for using https://magicthegathering.io/ in Elixir."
+  end
+
+  defp package() do
     [
+      organization: "MagicTheGathering",
       maintainers: ["Adrian Santalla Romero de Ávila", "Alexander Moreno Borrego", "Mario Garrido Torres"],
       licenses: ["MIT"],
       links: %{
