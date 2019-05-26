@@ -3,7 +3,7 @@ defmodule Mtg.Api.Base do
   Module defining a base module to call the API and parse the response
   """
 
-  alias Mtg.{Error}
+  alias Mtg.{Card, Error}
   alias Mtg.Response.{Collection}
 
   @type filter_key :: atom() | binary()
@@ -11,8 +11,8 @@ defmodule Mtg.Api.Base do
   @type or_filter :: {filter_key, :or, list(binary())}
   @type and_filter :: {filter_key, :and, list(binary())}
 
-  @callback call(list(normal_filter() | or_filter() | and_filter())) ::
-              {:ok, Collection.t()} | {:error, Error.t()}
+  @callback call(list(normal_filter() | or_filter() | and_filter()) | number()) ::
+              {:ok, Collection.t() | Card.t()} | {:error, Error.t()}
 
   defmacro __using__(_) do
     quote do
@@ -34,7 +34,7 @@ defmodule Mtg.Api.Base do
       defp handle_response({:ok, %HTTPoison.Response{status_code: 200, headers: headers, body: body}}),
         do: {headers, body |> Jason.decode!() |> Map.values() |> List.first()}
       defp handle_response({:ok, %HTTPoison.Response{status_code: code, body: body}}),
-        do: %Error{code: code, message: Jason.decode!(body)["message"]}
+        do: %Error{code: code, message: Jason.decode!(body)["error"]}
       defp handle_response({:error, %HTTPoison.Error{reason: reason}}),
         do: %Error{message: reason}
     end
