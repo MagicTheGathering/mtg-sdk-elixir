@@ -378,5 +378,111 @@ defmodule MtgSpec do
         expect id |> to(eq "8d64da9a-2c5d-5ac7-8d9d-5d8d709607c1")
       end
     end
+
+    context "when getting all types" do
+      let :mtg_response do
+        """
+        {
+          "types": [
+            "Artifact", "Card", "Conspiracy", "Creature", "Emblem", "Enchantment",
+            "Hero", "instant", "Instant", "Land", "Phenomenon", "Plane",
+            "Planeswalker", "Scheme", "Sorcery", "Summon", "Tribal", "Vanguard",
+            "You’ll"
+          ]
+        }
+        """
+      end
+
+      before do
+        allow HTTPoison |> to(accept(:get, fn("https://api.magicthegathering.io/v1/types", [], [recv_timeout: 30000]) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: mtg_response()}}
+        end))
+      end
+
+      it do
+        {:ok, types} = Mtg.list(Type)
+
+        expect types |> to(have_hd "Artifact")
+        expect types |> to(have_last "You’ll")
+        expect types |> to(have_length 19)
+      end
+    end
+
+    context "when getting all subtypes" do
+      let :mtg_response do
+        """
+        {
+          "subtypes": [
+            "Advisor", "Aetherborn", "Ajani", "Alara", "Ally", "Aminatou"
+          ]
+        }
+        """
+      end
+
+      before do
+        allow HTTPoison |> to(accept(:get, fn("https://api.magicthegathering.io/v1/subtypes", [], [recv_timeout: 30000]) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: mtg_response()}}
+        end))
+      end
+
+      it do
+        {:ok, subtypes} = Mtg.list(Subtype)
+
+        expect subtypes |> to(have_hd "Advisor")
+        expect subtypes |> to(have_last "Aminatou")
+        expect subtypes |> to(have_length 6)
+      end
+    end
+
+    context "when getting all supertypes" do
+      let :mtg_response do
+        """
+        {
+          "supertypes": ["Basic", "Host", "Legendary", "Ongoing", "Snow", "World"]
+        }
+        """
+      end
+
+      before do
+        allow HTTPoison |> to(accept(:get, fn("https://api.magicthegathering.io/v1/supertypes", [], [recv_timeout: 30000]) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: mtg_response()}}
+        end))
+      end
+
+      it do
+        {:ok, supertypes} = Mtg.list(Supertype)
+
+        expect supertypes |> to(have_hd "Basic")
+        expect supertypes |> to(have_last "World")
+        expect supertypes |> to(have_length 6)
+      end
+    end
+
+    context "when getting all formats" do
+      let :mtg_response do
+        """
+        {
+          "formats": [
+            "Commander", "Duel", "Frontier", "Future", "Legacy", "Modern",
+            "Oldschool", "Pauper", "Penny", "Standard", "Vintage"
+          ]
+        }
+        """
+      end
+
+      before do
+        allow HTTPoison |> to(accept(:get, fn("https://api.magicthegathering.io/v1/formats", [], [recv_timeout: 30000]) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: mtg_response()}}
+        end))
+      end
+
+      it do
+        {:ok, formats} = Mtg.list(Format)
+
+        expect formats |> to(have_hd "Commander")
+        expect formats |> to(have_last "Vintage")
+        expect formats |> to(have_length 11)
+      end
+    end
   end
 end
