@@ -19,3 +19,6 @@
 
 * v0.1.3
   * Add CHANGELOG.md
+
+* v0.1.4
+  * Change app name
