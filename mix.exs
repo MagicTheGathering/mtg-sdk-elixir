@@ -4,7 +4,7 @@ defmodule Mtg.MixProject do
   def project() do
     [
       app: :mtg,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.8",
       name: "MTG SDK Elixir",
       description: description(),
@@ -62,7 +62,6 @@ defmodule Mtg.MixProject do
 
   defp package() do
     [
-      organization: "MagicTheGathering",
       maintainers: ["Adrian Santalla Romero de Ávila", "Alexander Moreno Borrego", "Mario Garrido Torres"],
       licenses: ["MIT"],
       links: %{
