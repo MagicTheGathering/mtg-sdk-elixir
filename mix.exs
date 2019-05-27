@@ -4,7 +4,7 @@ defmodule Mtg.MixProject do
   def project() do
     [
       app: :mtg,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.8",
       name: "MTG SDK Elixir",
       description: description(),
