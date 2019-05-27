@@ -50,6 +50,7 @@ defmodule Mtg.MixProject do
       {:dialyxir, "~> 0.5", only: :dev},
       {:espec, "~> 1.7.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
+      {:ex_doc, "~> 0.20.2", only: :dev},
       {:httpoison, "~> 1.4"},
       {:inflex, "~> 1.10"},
       {:jason, "~> 1.1"}
