@@ -206,3 +206,21 @@ iex> Mtg.show(Set, "ktk")
   ...
  }}
 ```
+
+#### Get set booster
+```elixir
+iex> Mtg.generate_set_booster("ktk")
+{:ok,
+ %Mtg.Collection{
+  count: nil,
+   data: [
+     %Mtg.Card{...},
+     ...
+   ],
+   page_size: nil,
+   total_count: nil,
+   type: "cards"
+ }}
+```
+
+

@@ -81,7 +81,16 @@ defmodule MtgSpec do
       end
 
       it do
-        %Mtg.Card{name: name, types: types, cmc: cmc, rulings: rulings, foreign_names: foreign_names, legalities: legalities, multiverseid: multiverseid, id: id} = response_card()
+        %Mtg.Card{
+          name: name,
+          types: types,
+          cmc: cmc,
+          rulings: rulings,
+          foreign_names: foreign_names,
+          legalities: legalities,
+          multiverseid: multiverseid,
+          id: id
+        } = response_card()
 
         expect name |> to(eq "Abundance")
         expect types |> to(match_list ["Enchantment"])
@@ -135,7 +144,13 @@ defmodule MtgSpec do
       end
 
       it do
-        %Mtg.Set{block: block, booster: booster, border: border, mkm_id: mkm_id, release_date: release_date} = response_card()
+        %Mtg.Set{
+          block: block,
+          booster: booster,
+          border: border,
+          mkm_id: mkm_id,
+          release_date: release_date
+        } = response_card()
 
         expect block |> to(eq "Core Set")
         expect booster |> to(have_length 16)
@@ -197,7 +212,16 @@ defmodule MtgSpec do
       end
 
       it do
-        %Mtg.Card{name: name, types: types, cmc: cmc, rulings: rulings, foreign_names: foreign_names, legalities: legalities, multiverseid: multiverseid, id: id} = response_card()
+        %Mtg.Card{
+          name: name,
+          types: types,
+          cmc: cmc,
+          rulings: rulings,
+          foreign_names: foreign_names,
+          legalities: legalities,
+          multiverseid: multiverseid,
+          id: id
+        } = response_card()
 
         expect name |> to(eq "Abundance")
         expect types |> to(match_list ["Enchantment"])
@@ -249,13 +273,109 @@ defmodule MtgSpec do
       end
 
       it do
-        %Mtg.Set{block: block, booster: booster, border: border, mkm_id: mkm_id, release_date: release_date} = response_set()
+        %Mtg.Set{
+          block: block,
+          booster: booster,
+          border: border,
+          mkm_id: mkm_id,
+          release_date: release_date
+        } = response_set()
 
         expect block |> to(eq "Core Set")
         expect booster |> to(have_length 16)
         expect border |> to(eq nil)
         expect mkm_id |> to(eq 1234)
         expect release_date |> to(eq ~D[2007-07-13])
+      end
+    end
+
+    context "when getting set booster" do
+      let :mtg_response do
+        """
+        {
+          "cards": [
+            {
+              "name": "Mardu Ascendancy",
+              "names": [],
+              "cmc": 3,
+              "colors": [
+                "Black",
+                "Red",
+                "White"
+              ],
+              "set": "KTK",
+              "multiverseid": 386590,
+              "rulings": [
+                {
+                  "date": "2014-09-20",
+                  "text": "As the Goblin token enters the battlefield, you choose which opponent or opposing planeswalker it’s attacking. It doesn’t have to attack the same opponent or opposing planeswalker that the original creature is attacking."
+                }
+              ],
+              "foreignNames": [
+                {
+                  "name": "Vormacht der Mardu",
+                  "text": "Immer wenn eine Nichtspielsteinkreatur, die du kontrollierst, angreift, bringe einen 1/1 roten Goblin-Kreaturenspielstein getappt und angreifend ins Spiel. Opfere die Vormacht der Mardu: Kreaturen, die du kontrollierst, erhalten +0/+3 bis zum Ende des Zuges.",
+                  "flavor": null,
+                  "imageUrl": "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=387397&type=card",
+                  "language": "German",
+                  "multiverseid": 387397
+                }
+              ],
+              "legalities": [
+                {
+                  "format": "Commander",
+                  "legality": "Legal"
+                },
+                {
+                  "format": "Duel",
+                  "legality": "Legal"
+                },
+                {
+                  "format": "Frontier",
+                  "legality": "Legal"
+                }
+              ],
+              "id": "8d64da9a-2c5d-5ac7-8d9d-5d8d709607c1"
+            }
+          ]
+        }
+        """
+      end
+      let :response_card do
+        {:ok, %Mtg.Response.Collection{type: "cards", data: data}} = Mtg.generate_set_booster("ktk")
+        data |> List.first()
+      end
+
+      before do
+        allow HTTPoison |> to(accept(:get, fn("https://api.magicthegathering.io/v1/sets/ktk/booster", [], [recv_timeout: 30000]) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: mtg_response()}}
+        end))
+      end
+
+      it do
+        %Mtg.Card{
+          name: name,
+          names: names,
+          cmc: cmc,
+          colors: colors,
+          set: set,
+          multiverseid: multiverseid,
+          rulings: rulings,
+          foreign_names: foreign_names,
+          legalities: legalities,
+          id: id
+        } = response_card()
+
+        expect name |> to(eq "Mardu Ascendancy")
+        expect names |> to(eq [])
+        expect cmc |> to(eq 3.0)
+        expect colors |> to(match_list ["Black", "Red", "White"])
+        expect set |> to(eq "KTK")
+        expect multiverseid |> to(eq 386590)
+        expect rulings |> to(have_length 1)
+        expect foreign_names |> to(have_length 1)
+        expect legalities |> to(have_length 3)
+        expect id |> to(eq "8d64da9a-2c5d-5ac7-8d9d-5d8d709607c1")
       end
     end
   end
