@@ -4,10 +4,16 @@ defmodule Mtg do
   """
 
   alias __MODULE__.{Error}
-  alias __MODULE__.Api.{GenerateSetBooster, ListCards, ListSets, ShowCard, ShowSet}
+  alias __MODULE__.Api.{GenerateSetBooster, ListCards, ListSets, ListStrings, ShowCard, ShowSet}
   alias __MODULE__.Response.{Collection}
 
   @type filters :: list({atom() | binary(), any()})
+
+  @spec list(module()) :: {:ok, list(binary())} | {:error, Error.t()}
+  def list(Type), do: ListStrings.call(Type)
+  def list(Subtype), do: ListStrings.call(Subtype)
+  def list(Supertype), do: ListStrings.call(Supertype)
+  def list(Format), do: ListStrings.call(Format)
 
   @spec list(module(), filters()) :: {:ok, Collection.t()} | {:error, Error.t()}
   def list(type, params \\ [])

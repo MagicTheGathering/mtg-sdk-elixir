@@ -223,4 +223,51 @@ iex> Mtg.generate_set_booster("ktk")
  }}
 ```
 
+### Type
 
+#### Get types
+
+```elixir
+iex> Mtg.list(Type)
+{:ok,
+ ["Artifact", "Card", "Conspiracy", "Creature", "Emblem", "Enchantment", "Hero",
+  "instant", "Instant", "Land", "Phenomenon", "Plane", "Planeswalker", "Scheme",
+  "Sorcery", "Summon", "Tribal", "Vanguard", "You’ll"]}
+```
+
+### Subtype
+
+#### Get subtypes
+
+```elixir
+iex> Mtg.list(Subtype)
+{:ok,
+ ["Advisor", "Aetherborn", "Ajani", "Alara", "Ally", "Aminatou", "and/or",
+  "Angel", "Angrath", "Antelope", "Ape", "Arcane", "Archer", "Archon", "Arkhos",
+  "Arlinn", "Artificer", "Ashiok", "Assassin", "Assembly-Worker", "Atog",
+  "Aura", "Aurochs", "Autobot", "Avatar", "Azgol", "Azra", "Baddest,", "Badger",
+  "Barbarian", "Basilisk", "Bat", "Bear", "Beast", "Beaver", "Beeble",
+  "Belenon", "Berserker", "Biggest,", "Bird", "Boar", "Bolas", "Bolas’s",
+  "Brainiac", "Bringer", "Brushwagg", "Bureaucrat", "Camel", ...]}
+```
+
+### Supertype
+
+#### Get supertypes
+
+```elixir
+iex> Mtg.list(Supertype)
+{:ok,
+ ["Basic", "Host", "Legendary", "Ongoing", "Snow", "World"]}
+```
+
+### Format
+
+#### Get formats
+
+```elixir
+iex> Mtg.list(Format)
+{:ok,
+ ["Commander", "Duel", "Frontier", "Future", "Legacy", "Modern", "Oldschool",
+  "Pauper", "Penny", "Standard", "Vintage"]}
+```
